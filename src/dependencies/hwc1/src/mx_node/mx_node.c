@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "mx_node.h"
-#include "../mx_queue/mx_queue.h"
+#include "mx_queue/mx_queue.h"
 
 #define MAX_NUMBER_ATTEMPTS 10
 #define MAX_TIMEOUT 3000000

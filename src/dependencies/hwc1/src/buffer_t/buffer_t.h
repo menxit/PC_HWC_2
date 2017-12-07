@@ -1,8 +1,8 @@
 #ifndef _BUFFER_T
 #define _BUFFER_T
 
-#include "../sem.h"
-#include "../msg_t/msg_t.h"
+#include "sem.h"
+#include "msg_t/msg_t.h"
 #define BUFFER_ERROR NULL
 
 typedef struct buffer_t {

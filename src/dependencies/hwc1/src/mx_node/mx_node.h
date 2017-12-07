@@ -1,8 +1,8 @@
 #ifndef HC_C1_MX_NODE_H
 #define HC_C1_MX_NODE_H
 
-#include "../buffer_t/buffer_t.h"
-#include "../client_udp/client_udp.h"
+#include "buffer_t/buffer_t.h"
+#include "client_udp/client_udp.h"
 
 typedef struct mx_node {
   buffer_t *buffer;

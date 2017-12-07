@@ -1,7 +1,7 @@
 /*
- * Autore: Valter Crescenzi e gli studenti del 
+ * Autore: Valter Crescenzi e gli studenti del
  * Corso di Programmazione Concorrente
- *  
+ *
  * testList.c
  *
  * test sulle liste
@@ -9,7 +9,7 @@
 #include <CUnit/CUnit.h>
 #include <stdlib.h>
 
-#include "../list.h"
+#include "list.h"
 #include "testList.h"
 #include "listDomainAssertion.h"
 

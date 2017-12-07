@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
-#include "all_tests/all_tests.h"
+#include "tests/all_tests.h"
 
 int main(int argc, char **argv) {
 
@@ -16,8 +16,18 @@ int main(int argc, char **argv) {
   }
 
   CU_TestInfo suiteListe[] = {
-	  {"✓ TEST 1", test_1},
-	  CU_TEST_INFO_NULL
+    {
+      "✓ POISON_PILL_MSG should be a singleton",
+      poisonPillMsgShouldBeASingleton
+    },
+    {
+      "✓ isPoisonPillMsg should return true if the message is a poison pill",
+      isPoisonPillMsgShouldReturnTrueIfItIsAPoisonPill
+    },
+    {
+      "✓ isPoisonPillMsg should return false if the message is not a poison pill",
+      isPoisonPillMsgShouldReturnFalseIfItIsNotAPoisonPill
+    },
   };
 
   CU_SuiteInfo suites[] = {

@@ -1,8 +1,8 @@
 #ifndef HC_C1_MX_QUEUE_H
 #define HC_C1_MX_QUEUE_H
 
-#include "../server_udp/server_udp.h"
-#include "../buffer_t/buffer_t.h"
+#include "server_udp/server_udp.h"
+#include "buffer_t/buffer_t.h"
 
 #define EXTRACT_PATTERN "EXTRACT$$$"
 #define INSERT_PATTERN "INSERT$$$"

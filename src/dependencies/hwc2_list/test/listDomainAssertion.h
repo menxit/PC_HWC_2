@@ -1,13 +1,13 @@
 /*
- * Autore: Valter Crescenzi e gli studenti del 
+ * Autore: Valter Crescenzi e gli studenti del
  * Corso di Programmazione Concorrente
- *  
+ *
  * listDomainAssertion.h
  *
  * asserzioni di dominio sulle liste
 */
 
-#include "../list.h"
+#include "list.h"
 #ifndef LISTDOMAINASSERT_H_
 #define LISTDOMAINASSERT_H_
 

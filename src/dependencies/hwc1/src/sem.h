@@ -32,6 +32,15 @@ static inline long pc_sem_wait(pc_sem_t *s) {
 #endif
 }
 
+static inline long pc_get_value(pc_sem_t *s) {
+#ifdef __APPLE__
+  return dispatch_semaphore_wait(s->sem, DISPATCH_TIME_FOREVER);
+#else
+  return sem_getvalue(&s->sem);
+#endif
+}
+
+
 static inline long pc_sem_trywait(pc_sem_t *s) {
 #ifdef __APPLE__
   return dispatch_semaphore_wait(s->sem, DISPATCH_TIME_NOW);

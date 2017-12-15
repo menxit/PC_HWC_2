@@ -4,6 +4,7 @@
 #include <CUnit/Basic.h>
 #include "tests/suite_poison_pill.h"
 #include "tests/suite_provider.h"
+#include "tests/suite_reader.h"
 
 int main(int argc, char **argv) {
 
@@ -48,9 +49,26 @@ int main(int argc, char **argv) {
     CU_TEST_INFO_NULL,
   };
 
+  CU_TestInfo suiteReader[] = {
+    {
+      "✓ Reader subscribed should consume messages",
+      test_readerSubscribedShouldConsumeMessages,
+    },
+    {
+      "✓ Reader subscribed that receive a poison pill should stop",
+      test_readerSubscribedThatReceiveAPoisonPillShouldStop,
+    },
+    {
+      "✓  Reader subscribed that does not receive a poison pill should not stop",
+      test_readerSubscribedThatDoesNotReceiveAPoisonPillShouldNotStop,
+    },
+    CU_TEST_INFO_NULL,
+  };
+
   CU_SuiteInfo suites[] = {
     {.pName = "Suite Poison Pill", .pTests = suitePoisonPill},
     {.pName = "Suite Provider", .pTests = suiteProvider},
+    {.pName = "Suite Reader", .pTests = suiteReader},
     CU_SUITE_INFO_NULL
   };
 

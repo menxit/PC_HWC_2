@@ -1,0 +1,8 @@
+#ifndef HWC2_SUITE_READER_H
+#define HWC2_SUITE_READER_H
+
+void test_readerSubscribedShouldConsumeMessages(void);
+void test_readerSubscribedThatReceiveAPoisonPillShouldStop(void);
+void test_readerSubscribedThatDoesNotReceiveAPoisonPillShouldNotStop(void);
+
+#endif

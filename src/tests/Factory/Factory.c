@@ -1,10 +1,12 @@
-
 #include <msg_t/msg_t.h>
 #include <stdlib.h>
 #include <buffer_t/buffer_t.h>
 #include <list.h>
+#include <printf.h>
 #include "../../Provider/Provider.h"
 #include "../mocks/DispatcherMock/DispatcherMock.h"
+#include "../../Reader/Reader.h"
+#include "../../poison_pill/poison_pill.h"
 #define EXPECTED_MSG 1010
 
 /**
@@ -74,7 +76,27 @@ list_t *factory_createListOfMessages() {
   return list;
 }
 
+DispatcherMock *factory_createDispatcherMockThatOnSubscribeReturnABufferWithTenMessagesAndPoisonPill() {
+  buffer_t *buffer = factory_createHalfFullBuffer(20);
+  put_bloccante(buffer, POISON_PILL_MSG);
+  return _new_DispatcherMock(1, 100, buffer, 100);
+}
+
+DispatcherMock *factory_createDispatcherMockThatOnSubscribeReturnABufferWithTenMessagesWithoutPoisonPill() {
+  buffer_t *buffer = factory_createHalfFullBuffer(20);
+  return _new_DispatcherMock(1, 100, buffer, 100);
+}
+
 Provider *factory_createProviderWithDispatcherMock() {
-  DispatcherMock *dispatcherMock = _new_DispatcherMock(1, 100, factory_createEmptyBuffer(10), 0);
-  return _new_Provider(factory_createListOfMessages(), (Dispatcher*)dispatcherMock);
+  return _new_Provider(factory_createListOfMessages(),
+                       (Dispatcher *) factory_createDispatcherMockThatOnSubscribeReturnABufferWithTenMessagesAndPoisonPill());
+}
+
+void *task(msg_t *msg, void *args) {
+  //printf("%d\n", *(int*)msg->content);
+  return NULL;
+}
+
+Reader *factory_createReaderWithDispatcherMock() {
+  return _new_Reader(task);
 }

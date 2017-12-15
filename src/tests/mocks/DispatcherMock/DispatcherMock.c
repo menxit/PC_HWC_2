@@ -6,9 +6,9 @@ static int _addMessageOnProviderBuffer(DispatcherMock *this, msg_t *message) {
   return this->_addMessageOnProviderBufferReturnValue;
 }
 
-static buffer_t *_subscribe(DispatcherMock this) {
-  usleep((useconds_t) this._subscribeSleep);
-  return this._subscribeReturnValue;
+static buffer_t *_subscribe(DispatcherMock *this) {
+  usleep((useconds_t) this->_subscribeSleep);
+  return this->_subscribeReturnValue;
 }
 
 DispatcherMock *_new_DispatcherMock(int addMessageOnProviderBufferReturnValue,

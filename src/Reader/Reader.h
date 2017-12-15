@@ -6,6 +6,18 @@ typedef struct Reader {
 
   /**
    * @Private
+   * Indica se il reader si è registrato
+   */
+  unsigned short _isSubscribed;
+
+  /**
+   * @Private
+   * Numero di messaggi consumati.
+   */
+  unsigned long _numberOfConsumedMessages;
+
+  /**
+   * @Private
    * Buffer dal quale il Reader estrae i messaggi pervenuti dal Dispatcher.
    */
   buffer_t *_buffer;
@@ -39,6 +51,22 @@ typedef struct Reader {
 	 * @return
 	 */
   int (*subscribe)(struct Reader*, Dispatcher *dispatcher);
+
+  /**
+   * @Public
+   * Restituisce il numero di messaggi attualmente consumati dal reader.
+   *
+   * @return
+   */
+  unsigned long (*getNumberOfMessagesConsumed)(struct Reader*);
+
+  /**
+   * @Public
+   * Restituisce 1 se il reader è registrato al dispatcher 0 altrimenti.
+   *
+   * @return
+   */
+  unsigned short (*getIsSubscribed)(struct Reader*);
 
 } Reader;
 

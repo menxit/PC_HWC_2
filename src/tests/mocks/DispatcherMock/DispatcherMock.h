@@ -8,7 +8,7 @@ typedef struct DispatcherMock {
   buffer_t *_bufferProvider;
   list_t *_listOfBufferReader;
   int (*addMessageOnProviderBuffer)(struct Dispatcher*, msg_t *message);
-  buffer_t (*subscribe)(struct Dispatcher);
+  buffer_t *(*subscribe)(struct Dispatcher*);
 
   /**
    * @Private

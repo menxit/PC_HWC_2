@@ -5,6 +5,7 @@
 #include "tests/suite_poison_pill.h"
 #include "tests/suite_provider.h"
 #include "tests/suite_reader.h"
+#include "tests/suite_accepter.h"
 
 int main(int argc, char **argv) {
 
@@ -65,10 +66,32 @@ int main(int argc, char **argv) {
     CU_TEST_INFO_NULL,
   };
 
+  CU_TestInfo suiteAccepter[] = {
+    {
+      "✓ When a request is sent to an accepter with an empty buffer, it should return a message with the reader as content",
+      sendReaderWithAnEmptyBufferAccepterShouldReturnAMessageWithTheReaderAsContent
+    },
+    {
+      "✓ isRunning should return true if a poison pill is not sent",
+      isRunningShouldReturnTrueIfAPoisonPillWasNotSent
+    },
+    {
+      "✓ isRunning should return false if a poison pill is received",
+      isRunningShouldReturnFalseIfAPoisonPillIsReceived
+    },
+    CU_TEST_INFO_NULL,
+  };
+
+  CU_TestInfo suiteDispatcher[] = {
+    CU_TEST_INFO_NULL,
+  };
+
   CU_SuiteInfo suites[] = {
     {.pName = "Suite Poison Pill", .pTests = suitePoisonPill},
     {.pName = "Suite Provider", .pTests = suiteProvider},
     {.pName = "Suite Reader", .pTests = suiteReader},
+    {.pName = "Suite Accepter", .pTests = suiteAccepter},
+    {.pName = "Suite Dispatcher", .pTests = suiteDispatcher},
     CU_SUITE_INFO_NULL
   };
 

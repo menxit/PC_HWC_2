@@ -2,7 +2,7 @@
 #include "Factory/Factory.h"
 
 void test_readerSubscribedShouldConsumeMessages(void) {
-  Reader *reader = factory_createReaderWithDispatcherMock();
+  Reader *reader = factory_createReader();
   DispatcherMock *dispatcher = factory_createDispatcherMockThatOnSubscribeReturnABufferWithTenMessagesAndPoisonPill();
   reader->subscribe(reader, (Dispatcher*)dispatcher);
   usleep(100);
@@ -10,7 +10,7 @@ void test_readerSubscribedShouldConsumeMessages(void) {
 }
 
 void test_readerSubscribedThatReceiveAPoisonPillShouldStop(void) {
-  Reader *reader = factory_createReaderWithDispatcherMock();
+  Reader *reader = factory_createReader();
   DispatcherMock *dispatcher = factory_createDispatcherMockThatOnSubscribeReturnABufferWithTenMessagesAndPoisonPill();
   reader->subscribe(reader, (Dispatcher*)dispatcher);
   usleep(100);
@@ -18,7 +18,7 @@ void test_readerSubscribedThatReceiveAPoisonPillShouldStop(void) {
 }
 
 void test_readerSubscribedThatDoesNotReceiveAPoisonPillShouldNotStop(void) {
-  Reader *reader = factory_createReaderWithDispatcherMock();
+  Reader *reader = factory_createReader();
   DispatcherMock *dispatcher = factory_createDispatcherMockThatOnSubscribeReturnABufferWithTenMessagesWithoutPoisonPill();
   reader->subscribe(reader, (Dispatcher*)dispatcher);
   usleep(100);

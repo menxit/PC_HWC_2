@@ -13,6 +13,7 @@ static void *_subscribeTask(void *args) {
     msg = get_bloccante(buffer);
   }
   this->_isSubscribed = 0;
+  free(this);
   pthread_exit(0);
 }
 

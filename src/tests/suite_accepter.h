@@ -1,0 +1,8 @@
+#ifndef HWC2_SUITE_ACCEPTER_H_H
+#define HWC2_SUITE_ACCEPTER_H_H
+
+void sendReaderWithAnEmptyBufferAccepterShouldReturnAMessageWithTheReaderAsContent(void);
+void isRunningShouldReturnTrueIfAPoisonPillWasNotSent(void);
+void isRunningShouldReturnFalseIfAPoisonPillIsReceived(void);
+
+#endif

@@ -7,6 +7,7 @@
 #include "../mocks/DispatcherMock/DispatcherMock.h"
 #include "../../Reader/Reader.h"
 #include "../../poison_pill/poison_pill.h"
+#include "../../Accepter/Accepter.h"
 #define EXPECTED_MSG 1010
 
 /**
@@ -97,6 +98,19 @@ void *task(msg_t *msg, void *args) {
   return NULL;
 }
 
-Reader *factory_createReaderWithDispatcherMock() {
+Reader *factory_createReader() {
   return _new_Reader(task);
+}
+
+Accepter *factory_createAccepterWithEmptyAccepterBuffer() {
+  DispatcherMock *dispatcherMock = factory_createDispatcherMockThatOnSubscribeReturnABufferWithTenMessagesAndPoisonPill();
+  return _new_Accepter(dispatcherMock);
+}
+
+Accepter *factory_createAccepterWithAFullAccepterBuffer() {
+  DispatcherMock *dispatcherMock = factory_createDispatcherMockThatOnSubscribeReturnABufferWithTenMessagesAndPoisonPill();
+  Accepter *result = _new_Accepter(dispatcherMock);
+  buffer_t *fullBuffer = factory_createFullBuffer(10);
+  result->_bufferAccepter = fullBuffer;
+  return result;
 }

@@ -6,6 +6,7 @@
 #include "tests/suite_provider.h"
 #include "tests/suite_reader.h"
 #include "tests/suite_accepter.h"
+#include "tests/suite_dispatcher.h"
 
 int main(int argc, char **argv) {
 
@@ -83,6 +84,18 @@ int main(int argc, char **argv) {
   };
 
   CU_TestInfo suiteDispatcher[] = {
+    {
+      "✓ A subscribed reader should receive all the messages",
+      aSubscribedReaderShouldReceiveMessages
+    },
+    {
+      "✓ Two subscribed reader should receive all the messages",
+      twoSubscribedReaderShouldReceiveMessages
+    },
+    {
+      "✓ A slow reader should be deleted",
+      aSlowReaderShouldBeDeleted
+    },
     CU_TEST_INFO_NULL,
   };
 

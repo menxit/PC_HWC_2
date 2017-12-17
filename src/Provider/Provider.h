@@ -53,9 +53,10 @@ typedef struct Provider {
 
   /**
    * @Public
-   * Attendi che il Provider abbia terminato la sua esecuzione.
+   * Attendi che il Provider abbia terminato la sua esecuzione, ovvero quando ha inviato
+   * al Dispatcher la poison pill.
    */
-  int (*wait)(struct Provider*);
+  void (*wait)(struct Provider*);
 
 } Provider;
 

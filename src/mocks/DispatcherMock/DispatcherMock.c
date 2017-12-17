@@ -2,12 +2,12 @@
 #include "DispatcherMock.h"
 
 static int _addMessageOnProviderBuffer(DispatcherMock *this, msg_t *message) {
-  usleep((useconds_t) this->_addMessageOnProviderBufferSleep);
+  usleep(this->_addMessageOnProviderBufferSleep);
   return this->_addMessageOnProviderBufferReturnValue;
 }
 
 static buffer_t *_subscribe(DispatcherMock *this) {
-  usleep((useconds_t) this->_subscribeSleep);
+  usleep(this->_subscribeSleep);
   return this->_subscribeReturnValue;
 }
 

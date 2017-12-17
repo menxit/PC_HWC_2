@@ -1,5 +1,5 @@
 #include <CUnit/CUnit.h>
-#include "Factory/Factory.h"
+#include "../Factory/Factory.h"
 
 void test_readerSubscribedShouldConsumeMessages(void) {
   Reader *reader = factory_createReader();

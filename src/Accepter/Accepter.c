@@ -30,7 +30,9 @@ static void* _startTask(void* args) {
   buffer_t *buffer = this->_bufferAccepter;
   msg_t *msg = get_bloccante(buffer);
   while(msg != POISON_PILL_MSG) {
-    this->_dispatcher->addMessageOnProviderBuffer(this->_dispatcher, msg);
+    Reader *reader = msg->content;
+    reader->subscribe(reader, this->_dispatcher);
+    addElement(this->_listOfSubscribedReaders, reader);
     this->_requestSentToDispatcher++;
     msg = get_bloccante(buffer);
   }
@@ -38,12 +40,13 @@ static void* _startTask(void* args) {
   pthread_exit(0);
 }
 
-static int start(Accepter* this) {
+static void start(Accepter* this) {
   this->_isRunning = 1;
-  pthread_t thread;
-  pthread_create(&thread, NULL, this->_startTask, this);
-  pthread_detach(thread);
-  return 1;
+  pthread_create(this->_startTaskID, NULL, this->_startTask, this);
+}
+
+static void _wait(Accepter *this) {
+  pthread_join(*this->_startTaskID, NULL);
 }
 
 unsigned short getIsRunning(Accepter* this) {
@@ -59,6 +62,7 @@ Accepter *_new_Accepter(Dispatcher *dispatcher) {
   this->_dispatcher = dispatcher;
   this->_requestSentToDispatcher = 0;
   this->_isRunning = 0;
+  this->_startTaskID = malloc(sizeof(pthread_t));
 
   // Private methods
   this->_startTask = _startTask;
@@ -69,6 +73,7 @@ Accepter *_new_Accepter(Dispatcher *dispatcher) {
   this->sendReader = sendReader;
   this->sendPoisonPill = sendPoisonPill;
   this->start = start;
+  this->wait = _wait;
   this->getIsRunning = getIsRunning;
 
   return this;

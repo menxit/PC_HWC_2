@@ -1,6 +1,7 @@
 #include <stdlib.h>
-#include <pthread/pthread.h>
+#include <pthread.h>
 #include <list.h>
+#include <printf.h>
 #include "Provider.h"
 #include "../poison_pill/poison_pill.h"
 
@@ -10,6 +11,7 @@ static void *_startTask(void *args) {
   Provider *this = (Provider *) args;
   iterator_t *iterator = iterator_init(this->_messagesToSend);
   while(hasNext(iterator)) {
+    usleep(100);
     msg_t *msg = next(iterator);
     this->_dispatcher->addMessageOnProviderBuffer(this->_dispatcher, msg);
   }
@@ -32,11 +34,8 @@ static int _start(Provider *this) {
   return 1;
 }
 
-static int _wait(Provider *this) {
-  if(pc_sem_wait(this->_providerIsNotRunning) != 0) {
-    return PROVIDER_ERROR;
-  }
-  return pc_sem_post(this->_providerIsNotRunning) == 0;
+static void _wait(Provider *this) {
+  pthread_join(this->_startTaskID, NULL);
 }
 
 Provider *_new_Provider(list_t *messagesToSend, Dispatcher *dispatcher) {

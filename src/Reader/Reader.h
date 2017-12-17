@@ -68,7 +68,15 @@ typedef struct Reader {
    */
   unsigned short (*getIsSubscribed)(struct Reader*);
 
-} Reader;
+  /**
+   * @Public
+   * Invia una poison pill al reader. Metodo bloccante.
+   *
+   * @param this
+   */
+  void (*sendPoisonPill)(struct Reader* this);
+
+  } Reader;
 
 Reader *_new_Reader(void *task(msg_t* msg, void* args));
 

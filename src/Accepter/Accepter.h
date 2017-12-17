@@ -42,6 +42,12 @@ typedef struct Accepter {
 
   /**
    * @Private
+   * Identificativo del flusso di esecuzione di _startTask
+   */
+  pthread_t *_startTaskID;
+
+  /**
+   * @Private
    * Metodo che deve eseguire il flusso di esecuzione avviato allo start dell'Accepter.
    *
    * @param args
@@ -79,8 +85,15 @@ typedef struct Accepter {
    *
    * @return
    */
-  int (*start)(struct Accepter*);
+  void (*start)(struct Accepter*);
 
+  /**
+  * @Public
+  * The Accepter start to send requests to Dispatcher
+  *
+  * @return
+  */
+  void (*wait)(struct Accepter*);
 
   /**
    * @Public

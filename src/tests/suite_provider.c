@@ -1,6 +1,6 @@
 #include <CUnit/CUnit.h>
 #include "../Provider/Provider.h"
-#include "Factory/Factory.h"
+#include "../Factory/Factory.h"
 
 void test_startProviderWhenItIsNotRunningShouldNotFail(void) {
   Provider *provider = factory_createProviderWithDispatcherMock();

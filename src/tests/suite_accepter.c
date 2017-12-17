@@ -1,6 +1,6 @@
 #include <CUnit/CUnit.h>
 #include "../Accepter/Accepter.h"
-#include "Factory/Factory.h"
+#include "../Factory/Factory.h"
 
 void sendReaderWithAnEmptyBufferAccepterShouldReturnAMessageWithTheReaderAsContent(void) {
   Accepter *accepter = factory_createAccepterWithEmptyAccepterBuffer();

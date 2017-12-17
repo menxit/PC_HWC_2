@@ -2,13 +2,18 @@
 #define HWC2_DISPATCHERMOCK_H
 
 #include <buffer_t/buffer_t.h>
-#include "../../../Dispatcher/Dispatcher.h"
+#include "../../Dispatcher/Dispatcher.h"
 typedef struct DispatcherMock {
 
   buffer_t *_bufferProvider;
   list_t *_listOfBufferReader;
+  pc_sem_t *_useListOfBufferReader;
+  pthread_t *_startTaskID;
+  int (*_broadcastPoisonPill)(struct Dispatcher *);
+  int (*_broadcastMessage)(struct Dispatcher* this, msg_t* message);
   int (*addMessageOnProviderBuffer)(struct Dispatcher*, msg_t *message);
   buffer_t *(*subscribe)(struct Dispatcher*);
+  void (*start)(struct Dispatcher* this);
 
   /**
    * @Private

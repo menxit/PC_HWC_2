@@ -100,6 +100,10 @@ int main(int argc, char **argv) {
       "✓ On Dispatcher wait the list of buffer provider should be empty",
       onDispatcherWaitTheListOfBufferProviderShouldBeEmpty
     },
+    {
+      "✓ On Dispatcher wait the readers should receive a poison pill",
+      onDispatcherWaitTheListOfReaderShouldReceiveAPoisonPill
+    },
     CU_TEST_INFO_NULL,
   };
 

@@ -96,9 +96,12 @@ void onDispatcherWaitTheListOfBufferProviderShouldBeEmpty(void) {
   // Creo un dispatcher che riceverà 100 messaggi dal Provider
   Dispatcher *dispatcher = factory_createDispatcherThatWillReceiveNMessagesFromProvider(100);
 
-  // Creo un reader
-  Reader *reader = factory_createReader();
-  reader->subscribe(reader, dispatcher);
+  // Creo qualche reader
+  int i;
+  for(i = 0; i < 100; i++) {
+    Reader *reader = factory_createReader();
+    reader->subscribe(reader, dispatcher);
+  }
 
   // Avvio l'invio dei messaggi da parte del dispatcher ai reader registrati
   dispatcher->start(dispatcher);
@@ -106,8 +109,35 @@ void onDispatcherWaitTheListOfBufferProviderShouldBeEmpty(void) {
   // Attendo che tutte le poison pill siano state inviate sul buffer dei reader
   dispatcher->wait(dispatcher);
 
-  // Mi aspetto che il reader lento non abbia ricevuto tutti i messaggi ma che sia
-  // stato ucciso prima dal dispatcher.
+  // Mi aspetto che la lista dei buffer reader sia stata svuotata
   CU_ASSERT_EQUAL(size(dispatcher->_listOfBufferReader), 0);
+
+}
+
+void onDispatcherWaitTheListOfReaderShouldReceiveAPoisonPill(void) {
+
+  // Creo un dispatcher che riceverà 100 messaggi dal Provider
+  Dispatcher *dispatcher = factory_createDispatcherThatWillReceiveNMessagesFromProvider(100);
+
+  // Creo qualche reader
+  int i;
+  Reader *readers[50];
+  for(i = 0; i < 50; i++) {
+    readers[i] = factory_createSlowReader();
+    readers[i]->subscribe(readers[i], dispatcher);
+  }
+
+  // Avvio l'invio dei messaggi da parte del dispatcher ai reader registrati
+  dispatcher->start(dispatcher);
+
+  // Attendo che tutte le poison pill siano state inviate sul buffer dei reader
+  dispatcher->wait(dispatcher);
+
+  // Faccio questa attesa per essere certo che tutti i readers abbiano estratto dal buffer
+  // la poison pill e che si siano uccisi
+  usleep(100);
+
+  for(i = 0; i < 50; i++)
+    CU_ASSERT_EQUAL(readers[i]->_isSubscribed, 0);
 
 }

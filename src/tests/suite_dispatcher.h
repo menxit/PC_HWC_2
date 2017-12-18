@@ -5,5 +5,6 @@ void aSubscribedReaderShouldReceiveMessages(void);
 void twoSubscribedReaderShouldReceiveMessages(void);
 void aSlowReaderShouldBeDeleted(void);
 void onDispatcherWaitTheListOfBufferProviderShouldBeEmpty(void);
+void onDispatcherWaitTheListOfReaderShouldReceiveAPoisonPill(void);
 
 #endif

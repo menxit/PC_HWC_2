@@ -88,7 +88,7 @@ DispatcherMock *factory_createDispatcherMockThatOnSubscribeReturnABufferWithTenM
 
 Provider *factory_createProviderWithDispatcherMock() {
   return _new_Provider(factory_createListOfMessages(10),
-                       (Dispatcher *) factory_createDispatcherMockThatOnSubscribeReturnABufferWithTenMessagesAndPoisonPill());
+                       (Dispatcher *) factory_createDispatcherMockThatOnSubscribeReturnABufferWithTenMessagesAndPoisonPill(), 1000);
 }
 
 void *task(msg_t *msg, void *args) {
@@ -133,7 +133,7 @@ Accepter *factory_createAccepterWithAFullAccepterBuffer() {
 /******/
 
 void *taskSlowReader(msg_t *msg, void *args) {
-  usleep(500);
+  usleep(10000);
   return NULL;
 }
 
@@ -146,8 +146,8 @@ Dispatcher *factory_createDispatcherThatWillReceiveNMessagesFromProvider(int N) 
   // Creo un Dispatcher
   Dispatcher * dispatcher = _new_Dispatcher();
 
-  // Creo un Provider con 100 messaggi da inviare al Dispatcher
-  Provider* provider = _new_Provider(factory_createListOfMessages(N), dispatcher);
+  // Creo un Provider con N messaggi da inviare al Dispatcher
+  Provider* provider = _new_Provider(factory_createListOfMessages(N), dispatcher, 1000);
 
   // Provider inizia a inviare i messaggi al dispatcher
   provider->start(provider);

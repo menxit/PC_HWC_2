@@ -26,7 +26,7 @@ int main() {
    * uno ad uno al Dispatcher mediante delle put_bloccanti.
    */
   list_t *listOfMessagesProvider = factory_createListOfMessages(10);
-  Provider *provider = _new_Provider(listOfMessagesProvider, dispatcher);
+  Provider *provider = _new_Provider(listOfMessagesProvider, dispatcher, 100);
 
   /**
    * Creo un Accepter e lo avvio. Avviare un accepter significa le richieste di

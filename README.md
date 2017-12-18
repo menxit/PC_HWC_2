@@ -37,8 +37,13 @@ messagesToSend.
 
 Oltre alla lista di messaggi da spedire, viene richiesta una istanza di
 dispatcher.
+
+Infine si richiedere anche un parametro sleep. Questo parametro viene utilizzato principalmente
+per motivi di testing. In particolare si vuole allungare il tempo necessario al provider
+per inviare tutti i messaggi al dispatcher in modo tale da riuscire a testare più facilmente determinate
+proprietà del sistema.
 ```c
-Provider *_new_Provider(list_t *messagesToSend, Dispatcher *dispatcher);
+Provider *_new_Provider(list_t *messagesToSend, Dispatcher *dispatcher, unsigned int sleep);
 ```
 
 Provider inoltre ha soli due metodi pubblici, in particolare:

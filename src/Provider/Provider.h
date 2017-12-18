@@ -9,6 +9,12 @@ typedef struct Provider {
 
   /**
    * @Private
+   * Sleep tra l'invio di un messaggio all'altro
+   */
+  unsigned int _sleep;
+
+  /**
+   * @Private
    * Lista dei messaggi che devono essere inviati.
    */
   list_t *_messagesToSend;
@@ -61,6 +67,6 @@ typedef struct Provider {
 } Provider;
 
 
-Provider *_new_Provider(list_t *messagesToSend, Dispatcher *dispatcher);
+Provider *_new_Provider(list_t *messagesToSend, Dispatcher *dispatcher, unsigned int sleep);
 
 #endif

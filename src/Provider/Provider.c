@@ -11,7 +11,7 @@ static void *_startTask(void *args) {
   Provider *this = (Provider *) args;
   iterator_t *iterator = iterator_init(this->_messagesToSend);
   while(hasNext(iterator)) {
-    usleep(100);
+    usleep(this->_sleep);
     msg_t *msg = next(iterator);
     this->_dispatcher->addMessageOnProviderBuffer(this->_dispatcher, msg);
   }
@@ -38,10 +38,11 @@ static void _wait(Provider *this) {
   pthread_join(this->_startTaskID, NULL);
 }
 
-Provider *_new_Provider(list_t *messagesToSend, Dispatcher *dispatcher) {
+Provider *_new_Provider(list_t *messagesToSend, Dispatcher *dispatcher, unsigned int sleep) {
   Provider *this = malloc(sizeof(Provider));
 
   // Private properties
+  this->_sleep = sleep;
   this->_messagesToSend = messagesToSend;
   this->_dispatcher = dispatcher;
   this->_providerIsNotRunning = malloc(sizeof(pc_sem_t));

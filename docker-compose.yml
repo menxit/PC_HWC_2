@@ -7,3 +7,11 @@ services:
     volumes:
       - ./src:/opt/code
     command: ./bin/entrypoint.sh
+    deploy:
+      resources:
+        limits:
+          cpus: '8'
+          memory: 4000M
+        reservations:
+          cpus: '2'
+          memory: 4000M

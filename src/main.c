@@ -5,16 +5,10 @@
 void *sendRequestReaders(void *args) {
   Accepter *accepter = (Accepter*)args;
   int i = 0;
-  for(i = 0; i < 7; i++) {
-    Reader *reader;
-    if(i%3 == 0) {
-      reader = factory_createReaderSleep5();
-    } else {
-      reader = factory_createReaderSleep1();
-    }
+  for(i = 0; i < 100; i++) {
+    Reader *reader = factory_createSlowReader();
     accepter->sendReader(accepter, reader);
-    sleep(3);
-    //printf("Richiesta creazione reader accettata dall'accepter.\n");
+    usleep(50);
   }
   pthread_exit(0);
 }
@@ -54,7 +48,7 @@ int main() {
   */
   dispatcher->start(dispatcher);
 
-  sleep(6);
+  //sleep(6);
   provider->start(provider);
 
   /**

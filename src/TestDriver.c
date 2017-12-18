@@ -96,6 +96,10 @@ int main(int argc, char **argv) {
       "✓ A slow reader should be deleted",
       aSlowReaderShouldBeDeleted
     },
+    {
+      "✓ On Dispatcher wait the list of buffer provider should be empty",
+      onDispatcherWaitTheListOfBufferProviderShouldBeEmpty
+    },
     CU_TEST_INFO_NULL,
   };
 

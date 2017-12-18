@@ -4,5 +4,6 @@
 void aSubscribedReaderShouldReceiveMessages(void);
 void twoSubscribedReaderShouldReceiveMessages(void);
 void aSlowReaderShouldBeDeleted(void);
+void onDispatcherWaitTheListOfBufferProviderShouldBeEmpty(void);
 
 #endif

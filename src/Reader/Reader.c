@@ -9,13 +9,11 @@ static void *_subscribeTask(void *args) {
   buffer_t *buffer = this->_buffer;
   msg_t *msg = get_bloccante(buffer);
   while(msg != POISON_PILL_MSG) {
-    //printf("Reader ha ricevuto un messaggio.\n");
     this->_numberOfConsumedMessages++;
     this->_task(msg, NULL);
     msg = get_bloccante(buffer);
   }
   this->_isSubscribed = 0;
-  //free(this);
   pthread_exit(0);
 }
 

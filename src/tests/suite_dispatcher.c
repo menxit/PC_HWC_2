@@ -89,5 +89,25 @@ void aSlowReaderShouldBeDeleted(void) {
   // stato ucciso prima dal dispatcher.
   CU_ASSERT_NOT_EQUAL(slowReader->getNumberOfMessagesConsumed(slowReader), N);
   CU_ASSERT_EQUAL(reader->getNumberOfMessagesConsumed(reader), N);
+}
+
+void onDispatcherWaitTheListOfBufferProviderShouldBeEmpty(void) {
+
+  // Creo un dispatcher che riceverà 100 messaggi dal Provider
+  Dispatcher *dispatcher = factory_createDispatcherThatWillReceiveNMessagesFromProvider(100);
+
+  // Creo un reader
+  Reader *reader = factory_createReader();
+  reader->subscribe(reader, dispatcher);
+
+  // Avvio l'invio dei messaggi da parte del dispatcher ai reader registrati
+  dispatcher->start(dispatcher);
+
+  // Attendo che tutte le poison pill siano state inviate sul buffer dei reader
+  dispatcher->wait(dispatcher);
+
+  // Mi aspetto che il reader lento non abbia ricevuto tutti i messaggi ma che sia
+  // stato ucciso prima dal dispatcher.
+  CU_ASSERT_EQUAL(size(dispatcher->_listOfBufferReader), 0);
 
 }

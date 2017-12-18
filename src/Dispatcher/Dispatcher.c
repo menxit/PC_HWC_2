@@ -70,7 +70,7 @@ static int _broadcastMessage(Dispatcher* this, msg_t* message) {
     if(put_non_bloccante(bufferReader, message) == BUFFER_ERROR) {
       _sendPoisonPill(bufferReader);
       removeElement(this->_listOfBufferReader, bufferReader);
-      printf("Reader troppo lento e quindi richiesta rimozione.\n");
+      //printf("Reader troppo lento e quindi richiesta rimozione.\n");
     } else {
       //printf("Messaggio inoltrato al reader\n");
     }

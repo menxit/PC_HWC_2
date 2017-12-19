@@ -111,8 +111,6 @@ void onDispatcherWaitTheListOfBufferProviderShouldBeEmpty(void) {
   // Attendo che tutte le poison pill siano state inviate sul buffer dei reader
   dispatcher->wait(dispatcher);
 
-  return;
-
   // Mi aspetto che la lista dei buffer reader sia stata svuotata
   CU_ASSERT_EQUAL(size(dispatcher->_listOfBufferReader), 0);
 

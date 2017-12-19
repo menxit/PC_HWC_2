@@ -20,7 +20,6 @@ static void *_subscribeTask(void *args) {
 static int subscribe(struct Reader *this, Dispatcher *dispatcher) {
   this->_buffer = dispatcher->subscribe(dispatcher);
   this->_isSubscribed = 1;
-  //printf("Reader si è registrato al dispatcher.\n");
   pthread_t thread;
   pthread_create(&thread, NULL, this->_subscribeTask, this);
   pthread_detach(thread);

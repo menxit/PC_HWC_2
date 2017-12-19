@@ -17,7 +17,6 @@ static buffer_t *subscribe(Dispatcher* this) {
   }
   buffer_t *buffer = buffer_init(SIZE_BUFFER_READER);
   addElement(this->_listOfBufferReader, buffer);
-  //printf("Buffer assegnato a un reader.\n");
   pc_sem_post(this->_useListOfBufferReader);
   return buffer;
 }
@@ -28,10 +27,12 @@ static void *_sendPoisonPillTask(void *args) {
   pthread_exit(0);
 }
 
-static pthread_t _sendPoisonPill(buffer_t* bufferReader) {
-  pthread_t sendPoisonPillThread;
-  pthread_create(&sendPoisonPillThread, NULL, _sendPoisonPillTask, bufferReader);
-  pthread_detach(sendPoisonPillThread);
+static pthread_t* _sendPoisonPill(buffer_t* bufferReader, int detached) {
+  pthread_t *sendPoisonPillThread = malloc(sizeof(pthread_t));
+  pthread_create(sendPoisonPillThread, NULL, _sendPoisonPillTask, bufferReader);
+  if(detached == 1) {
+    pthread_detach(*sendPoisonPillThread);
+  }
   return sendPoisonPillThread;
 }
 
@@ -43,13 +44,13 @@ static int _broadcastPoisonPill(Dispatcher *this) {
   list_t *listOfPThread = list_init();
   while(hasNext(iterator)) {
     buffer_t *bufferReader = next(iterator);
-    addElement(listOfPThread, _sendPoisonPill(bufferReader));
+    addElement(listOfPThread, _sendPoisonPill(bufferReader, 0));
     removeElement(this->_listOfBufferReader, bufferReader);
   }
   iterator_destroy(iterator);
   iterator = iterator_init(listOfPThread);
   while(hasNext(iterator)) {
-    pthread_join(next(iterator), NULL);
+    pthread_join(*(pthread_t *)next(iterator), NULL);
   }
   pc_sem_post(this->_useListOfBufferReader);
   return 1;
@@ -67,13 +68,12 @@ static int _broadcastMessage(Dispatcher* this, msg_t* message) {
 
     buffer_t *bufferReader = next(iterator);
 
+    // reader troppo lento, richiesta rimozione
     if(put_non_bloccante(bufferReader, message) == BUFFER_ERROR) {
-      _sendPoisonPill(bufferReader);
+      _sendPoisonPill(bufferReader, 1);
       removeElement(this->_listOfBufferReader, bufferReader);
-      //printf("Reader troppo lento e quindi richiesta rimozione.\n");
-    } else {
-      //printf("Messaggio inoltrato al reader\n");
     }
+
   }
 
   iterator_destroy(iterator);
@@ -94,7 +94,6 @@ static void *_startTask(void *args) {
       this->_broadcastPoisonPill(this);
       break;
     }
-
 
     this->_broadcastMessage(this, message);
 
